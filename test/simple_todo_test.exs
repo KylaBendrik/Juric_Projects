@@ -13,7 +13,7 @@ defmodule TodoListTest do
       %{todo_list: todo_list}
     end
 
-    @tag :pending
+    #@tag :pending
     test "retrieves entries for Dec 19", context do
       dec_19_entries = TodoList.entries(context.todo_list, ~D[2018-12-19])
       assert dec_19_entries == ["Movies", "Dentist"]
