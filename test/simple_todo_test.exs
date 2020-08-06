@@ -25,6 +25,7 @@ defmodule TodoListTest do
       assert dec_18_entries == []
     end
     
+    @tag :pending
     test "deletes an entry", context do
       entries = context.todo_list
       |> TodoList.delete_entry(1)
