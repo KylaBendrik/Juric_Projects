@@ -21,16 +21,12 @@ defmodule TodoList do
     )
   end
   
-  def add_entry(todo_list, entry) do
-    entry = Map.put(entry, :id, todo_list.auto_id)
-    
-    new_entries = Map.put(
-      todo_list.entries,
-      todo_list.auto_id,
-      entry
-    )
-    
-    %TodoList{todo_list | entries: new_entries, auto_id: todo_list.auto_id + 1}
+  def add_entry(todo_server, new_entry) do
+    send(todo_server, {:add_entry, new_entry})
+  end
+  
+  defp process_message(todo_list, {:add_entry, new_entry}) do
+    TodoList.add_entry(todo_list, new_entry)
   end
   
   def entries(todo_list, date) do
