@@ -3,16 +3,20 @@ defmodule TodoListTest do
   doctest TodoList
 
   describe "simple_todo" do
-    setup do
-      todo_list =
-        TodoList.new()
-        |> TodoList.add_entry(%{date: ~D[2018-12-19], title: "Dentist"})
-        |> TodoList.add_entry(%{date: ~D[2018-12-20], title: "Shopping"})
-        |> TodoList.add_entry(%{date: ~D[2018-12-19], title: "Movies"})
-
-      %{todo_list: todo_list}
+    test "pg 153 iex example" do
+      TodoServer.start()
+      TodoServer.add_entry(%{date: ~D[2018-12-19], title: "Dentist"})
+      
+      TodoServer.add_entry(%{date: ~D[2018-12-20], title: "Shopping"})
+      
+      TodoServer.add_entry(%{date: ~D[2018-12-19], title: "Movies"})
+      
+      
+      entries = TodoServer.entries(%{date: ~D[2018-12-19], title: "Dentist"})
+      
+      assert entries = [%{date: ~D[2018-12-19], id: 3, title: "Movies"},
+      %{date: ~D[2018-12-19], id: 1, title: "Dentist"}]
     end
-
     @tag :pending
     test "retrieves entries for Dec 19", context do
       dec_19_entries = TodoList.entries(context.todo_list, ~D[2018-12-19])
