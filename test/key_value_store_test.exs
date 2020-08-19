@@ -11,7 +11,7 @@ defmodule KeyValueStoreTest do
 
     # @tag :pending
     test ":put and :get work as expected", _context do
-      pid = KeyValueStore.start
+      {:ok, pid} = KeyValueStore.start
 
       KeyValueStore.put(pid, :some_key, :some_value)
       assert :some_value == KeyValueStore.get(pid, :some_key)
