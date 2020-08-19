@@ -1,6 +1,8 @@
 defmodule KeyValueStoreTest do
   use ExUnit.Case
   doctest KeyValueStore
+  
+  @moduletag timeout: 10000
 
   describe "KeyValue Store" do
     setup do
@@ -9,10 +11,10 @@ defmodule KeyValueStoreTest do
 
     # @tag :pending
     test ":put and :get work as expected", _context do
-      pid = ServerProcess.start(KeyValueStore)
+      pid = KeyValueStore.start
 
-      assert :ok == ServerProcess.call(pid, {:put, :some_key, :some_value})
-      assert :some_value == ServerProcess.call(pid, {:get, :some_key})
+      KeyValueStore.put(pid, :some_key, :some_value)
+      assert :some_value == KeyValueStore.get(pid, :some_key)
     end
   end
 end
